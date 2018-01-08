@@ -14,14 +14,12 @@ machine:
 
 dependencies:
     pre:
-        cp -avr /licenses $ANDROID_HOME/licenses
+        - cp -avr /licenses $ANDROID_HOME/licenses
         - echo y | android update sdk --no-ui --all --filter extra-google-m2repository,extra-android-support,android-26
         - echo y | android update sdk --no-ui --all --filter tools,platform-tools,build-tools-26.0.2
 
         ANDROID_HOME=/usr/local/android-sdk-linux ./gradlew dependencies
 
-
-    pre:
         - chmod +x gradlew
 
 
