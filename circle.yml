@@ -24,7 +24,7 @@ dependencies:
         - chmod 777 gradlew
             - chmod a+x gradlew
         - ANDROID_HOME=/usr/local/android-sdk-linux ./gradlew dependencies
-        - chmod +x gradlew
+
 
 
 test:
