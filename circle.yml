@@ -14,15 +14,14 @@ machine:
 
 dependencies:
     pre:
-        - echo Y | android update sdk --no-ui --all --filter extra-google-m2repository,extra-android-support,android-26
-        - echo Y | android update sdk --no-ui --all --filter tools,platform-tools,build-tools-26.0.2
+        - echo Y | android update sdk --no-ui --all --filter extra-google-m2repository,extra-android-support,android-25
+        - echo Y | android update sdk --no-ui --all --filter tools,platform-tools,build-tools-25.0.0
+        yes | sudo sdkmanager --licenses
 
         ANDROID_HOME=/usr/local/android-sdk-linux ./gradlew dependencies
 
     pre:
         - chmod +x gradlew
-
-    post: - cp -r licenses/. $ANDROID_HOME/licenses ` From: https://developer.android.com/studio/intro/update.html#download-with-gradle
 
 
 test:
