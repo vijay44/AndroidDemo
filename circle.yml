@@ -1,14 +1,9 @@
-#
-# Build configuration for Circle CI
-#
 
-#general:
-#    artifacts:
-#        - /home/ubuntu/AndroidDemo/app/build/outputs/apk/
 
 machine:
-    java:
-        version: oraclejdk8
+  timezone: Asia/Tokyo
+  java:
+    version: openjdk7
   environment:
     ANDROID_HOME: /usr/local/android-sdk-linux
     INFER_HOME: /home/ubuntu/.infer/infer-linux64-v0.1.0/infer/infer
@@ -27,7 +22,7 @@ dependencies:
         rm infer-linux64-v0.1.0.tar.xz
       fi
 
-  override:
+ override:
         - cp -avr licenses ${ANDROID_HOME}/licenses
 
         - echo "y" | android update sdk --no-ui --all --filter "tool,extra-android-m2repository,extra-android-support,extra-google-google_play_services,extra-google-m2repository"
@@ -38,8 +33,6 @@ dependencies:
 
         - chmod +x gradlew
         - ANDROID_HOME=/usr/local/android-sdk-linux ./gradlew dependencies
-
-
 test:
   pre:
     # start the emulator
