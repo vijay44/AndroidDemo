@@ -27,7 +27,7 @@ dependencies:
 
 
 test:
-  override:
+  pre:
     # start the emulator
     - emulator -avd circleci-android24 -no-audio -no-window:
         background: true
