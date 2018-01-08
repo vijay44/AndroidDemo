@@ -1,0 +1,8 @@
+<resources>
+     <!-- AuthenticationActivity -->
+     <string name="userName">whiteelephant261</string>
+    <string name="user_password">video</string>
+    <string name="driverName">Sarah Friedrich</string>
+    <string name="driverLocation">2297 bahnhofstraße</string>
+    <string name="driverNameKey">sa</string>
+</resources>
