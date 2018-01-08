@@ -20,8 +20,10 @@ dependencies:
         ANDROID_HOME=/usr/local/android-sdk-linux ./gradlew dependencies
 
     pre:
-        - chmod 777 gradlew
-            - chmod a+x gradlew
+        - chmod +x gradlew
+
+    post: - cp -r licenses/. $ANDROID_HOME/licenses ` From: https://developer.android.com/studio/intro/update.html#download-with-gradle
+
 
 test:
     override:
