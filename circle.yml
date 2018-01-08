@@ -1,48 +1,33 @@
-#
-# Build configuration for Circle CI
-#
 
-#general:
-#    artifacts:
-#        - /home/ubuntu/AndroidDemo/app/build/outputs/apk/
+general:
+    artifacts:
+        - /home/ubuntu/AndroidDemo/app/build/outputs/apk/
 
 machine:
-    java:
-        version: oraclejdk8
     environment:
         ANDROID_HOME: /usr/local/android-sdk-linux
+        GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx2048m -XX:+HeapDumpOnOutOfMemoryError"'
+        _JAVA_OPTIONS: "-Xms512m -Xmx1024m"
+  java:
+    version: oraclejdk8
 
 dependencies:
     pre:
-        - cp -avr /licenses $ANDROID_HOME/licenses
-        - echo y | android update sdk --no-ui --all --filter extra-google-m2repository,extra-android-support,android-26
-        - echo y | android update sdk --no-ui --all --filter tools,platform-tools,build-tools-26.0.2
-
-        ANDROID_HOME=/usr/local/android-sdk-linux ./gradlew dependencies
-
+        - echo y | android update sdk --no-ui --all --filter tools,platform-tools,android-26
+        - echo y | android update sdk --no-ui --all --filter build-tools-25.0.2
+        - echo y | android update sdk --no-ui --all --filter android-25
+        - echo y | android update sdk --no-ui --all --filter tools
+        - echo y | android update sdk --no-ui --all --filter extra-android-m2repository
+        - echo y | android update sdk --no-ui --all --filter extra-android-support
+        - echo y | android update sdk --no-ui --all --filter extra-google-google_play_services
+        - echo y | android update sdk --no-ui --all --filter extra-google-m2repository
+    override:
         - chmod +x gradlew
-
+        - ANDROID_HOME=/usr/local/android-sdk-linux ./gradlew dependencies
 
 test:
     override:
-        - ./gradlew assembleDebug
+        - (./gradlew assemble):
+            timeout: 360
+        # copy the build outputs to artifacts
         - cp -r app/build/outputs $CIRCLE_ARTIFACTS
-
-#        # start the build
-#        - (./gradlew assemble):
-#            timeout: 360
-#        # start the emulator
-#        - emulator -avd circleci-android22 -no-audio -no-window:
-#            background: true
-#            parallel: true
-#        # wait for it to have booted
-#        - circle-android wait-for-boot
-#        # unlock the emulator screen
-#        - sleep 30
-#        - adb shell input keyevent 82
-#        # run tests  against the emulator.
-#        - ./gradlew connectedDevelopmentDebugAndroidTest -PdisablePreDex
-#        # copy the build outputs to artifacts
-#        - cp -r app/build/outputs $CIRCLE_ARTIFACTS
-#        # copy the test results to the test results directory.
-#        - cp -r app/build/outputs/androidTest-results/* $CIRCLE_TEST_REPORTS
