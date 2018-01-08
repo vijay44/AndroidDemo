@@ -14,9 +14,8 @@ machine:
 
 dependencies:
     pre:
-        - echo Y | android update sdk --no-ui --all --filter extra-google-m2repository,extra-android-support,android-25
-        - echo Y | android update sdk --no-ui --all --filter tools,platform-tools,build-tools-25.0.0
-        yes | sudo sdkmanager --licenses
+        - echo y | android update sdk --no-ui --all --filter extra-google-m2repository,extra-android-support,android-24
+        - echo y | android update sdk --no-ui --all --filter tools,platform-tools,build-tools-24.0.0
 
         ANDROID_HOME=/usr/local/android-sdk-linux ./gradlew dependencies
 
