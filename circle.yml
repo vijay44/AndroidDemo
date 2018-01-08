@@ -22,7 +22,7 @@ dependencies:
         rm infer-linux64-v0.1.0.tar.xz
       fi
 
- override:
+  override:
         - cp -avr licenses ${ANDROID_HOME}/licenses
 
         - echo "y" | android update sdk --no-ui --all --filter "tool,extra-android-m2repository,extra-android-support,extra-google-google_play_services,extra-google-m2repository"
