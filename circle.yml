@@ -14,14 +14,14 @@ machine:
 
 dependencies:
     pre:
-        - echo y | android update sdk --no-ui --all --filter extra-google-m2repository,extra-android-support,android-26
-        - echo y | android update sdk --no-ui --all --filter tools,platform-tools,build-tools-26.0.2
+        - echo Y | android update sdk --no-ui --all --filter extra-google-m2repository,extra-android-support,android-26
+        - echo Y | android update sdk --no-ui --all --filter tools,platform-tools,build-tools-26.0.2
 
-#        ANDROID_HOME=/usr/local/android-sdk-linux ./gradlew dependencies
+        ANDROID_HOME=/usr/local/android-sdk-linux ./gradlew dependencies
 
     pre:
-        - chmod +x gradlew
-
+        - chmod 777 gradlew
+            - chmod a+x gradlew
 
 test:
     override:
