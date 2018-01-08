@@ -14,8 +14,8 @@ machine:
 
 dependencies:
     pre:
-        - echo y | android update sdk --no-ui --all --filter extra-google-m2repository,extra-android-support,android-26
-        - echo y | android update sdk --no-ui --all --filter tools,platform-tools,build-tools-26.0.2
+        - run echo y | android update sdk --no-ui --all --filter extra-google-m2repository,extra-android-support,android-26
+        - run echo y | android update sdk --no-ui --all --filter tools,platform-tools,build-tools-26.0.2
 
 #        ANDROID_HOME=/usr/local/android-sdk-linux ./gradlew dependencies
 
