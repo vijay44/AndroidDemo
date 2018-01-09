@@ -28,11 +28,10 @@ dependencies:
 
 test:
   override:
-    # start the emulator
-     - emulator -avd circleci-android24 -no-window -gpu off:
-            background: true
-            parallel: true
-    # wait for it to have booted
+    # launch the default Android 24 emulator
+    - emulator -avd circleci-android24 -no-window -gpu off:
+        background: true
+        parallel: true
     - circle-android wait-for-boot
     # unlock the emulator screen
     - sleep 30
