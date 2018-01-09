@@ -27,19 +27,16 @@ dependencies:
 
 
 test:
-  pre:
+  override:
     # start the emulator
-    - emulator -avd circleci-android24 -no-audio -no-window:
+    - emulator -avd circleci-android24 -no-window:
         background: true
         parallel: true
     # wait for it to have booted
-    - circle-android
-    # unlock the emulator screen
-    - sleep 600
-    - adb shell input keyevent 82
+    - circle-android wait-for-boot
     # run tests  against the emulator.
-    - ./gradlew connectedAndroidTest -PdisablePreDex
+    - ./gradlew connectedAndroidTest
     # copy the build outputs to artifacts
-    - cp -r app/build/outputs $CIRCLE_ARTIFACTS
+    - cp -r my-project/build/outputs $CIRCLE_ARTIFACTS
     # copy the test results to the test results directory.
-    - cp -r app/build/outputs/androidTest-results/* $CIRCLE_TEST_REPORTS
+    - cp -r my-project/build/outputs/androidTest-results/* $CIRCLE_TEST_REPORTS
