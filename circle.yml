@@ -20,16 +20,6 @@ dependencies:
         - android list sdk -a
         - echo "y" | "${ANDROID_HOME}/tools/bin/sdkmanager" "platforms;android-26" "tools" "build-tools;26.0.2" "build-tools;25.0.3"
         - java -version
-         # download ABI for android 24 emulator
-                # NOTE: CircleCI currently doesn't support KVM, which would make the
-                #       emulator way faster and with more features. For that reason, I'm
-                #       using sys-img-armeabi-v7a-android-24, if they implement KVM in a near
-                #       future, we should change this to sys-img-x86-android-24
-                - echo y | android update sdk --no-ui --all --filter sys-img-armeabi-v7a-android-24
-                # generate our android img
-                # NOTE: Same case here, I'm using armeabi-v7a, but if possible go for x86
-                - echo n | android create avd --name myandroid24 -t "android-24" --abi armeabi-v7a
-                - wget "https://services.gradle.org/distributions/gradle-2.14.1-bin.zip"; unzip gradle-2.14.1-bin.zip
 
 
         - chmod +x gradlew
@@ -37,12 +27,15 @@ dependencies:
 
 
 test:
-  override:
-    # start emulator
-           - emulator -avd myandroid24 -no-audio -no-window
-           - circle-android wait-for-boot
-           # this is not the greatest solution, but it seemed like the only one
-           - sleep 30
+  pre:
+    # start the emulator
+    - emulator -avd circleci-android23 -no-window:
+        background: true
+        parallel: true
+    # wait for it to have booted
+    - circle-android wait-for-boot
+    # unlock the emulator screen
+    - sleep 30
     - adb shell input keyevent 82
     # run tests  against the emulator.
     - ./gradlew connectedAndroidTest -PdisablePreDex
