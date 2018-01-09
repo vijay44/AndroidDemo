@@ -29,9 +29,9 @@ dependencies:
 test:
   pre:
     # start the emulator
-    - emulator -avd circleci-android26 -no-window:
-        background: true
-        parallel: true
+     - emulator -avd circleci-android24 -no-window -gpu off:
+            background: true
+            parallel: true
     # wait for it to have booted
     - circle-android wait-for-boot
     # unlock the emulator screen
